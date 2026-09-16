@@ -1,0 +1,26 @@
+body {
+    background-image: url(background.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    text-align: center;
+    font-size: large;
+    font-family: Arial;
+    color: rgb(134, 134, 134);
+}
+
+button {
+    padding: 15px;
+    border-radius: 25px;
+    background-color: blue;
+    color: white;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+.release {
+    text-decoration: none;
+    color: rgb(134, 134, 134);
+}
