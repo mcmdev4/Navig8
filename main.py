@@ -3,6 +3,7 @@ import shlex
 import time
 from tkinter import *
 from tkinter import filedialog
+import runpy as rpy
 
 print("Welcome to Navig8 LWVM Enviroment")
 
@@ -15,7 +16,7 @@ def env():
         try:
             args = shlex.split(command)
         except Exception as e:
-            raise e
+            print("Failed to run command")
 
         if command.strip().lower().startswith("print"):
             if len(args) > 1:
@@ -31,9 +32,54 @@ def env():
             elif args[1] == "Magicalc":
                 magicalc()
                 pass
-        elif command.strip().startswith("executepy"):
-            exec(args[1])
+            else:
+                print("invalid argument")
+        elif command.strip().startswith("exepy"):
+            rpy.run_path(args[1])
             pass
+        elif command.strip().lower().startswith("choc"):
+            print(f"Installing app: {args[1]}")
+
+            result = subprocess.run(
+                ["choco", "install", args[1], "-y"],
+                capture_output=True,
+                text=True,
+            )
+
+            print(result.stdout)
+
+            if result.returncode == 0:
+                print(f"Successfully installed app: {args[1]}")
+            else:
+                print(f"Failed to install app: {args[1]}")
+                print(result.stderr)
+        elif command.strip().lower().startswith("listaction"):
+            if args[1].lower() == "command":
+                print("""
+
+                listaction: lists actions (commands, programs, etc.)
+
+                print: prints an output from the first argument (args[1])
+
+                shutdown: shuts down Navig8
+
+                open: opens a graphical application
+
+                exepy: executes a python script specified with the path (use it at your own risk)
+
+                choc: installs an application to the computer via chocolatey (use it at your own risk)
+
+                """)
+            elif args[1] == "programs":
+                print("""
+                
+                Magicalc: calculator
+
+                Postit: notepad
+
+                """)
+            else:
+                print("invalid argument")
         else:
             print("Error: Command does not exist")
 
@@ -214,6 +260,8 @@ def magicalc():
     clear.pack()
 
     window.mainloop()
+
+
 
 
 
