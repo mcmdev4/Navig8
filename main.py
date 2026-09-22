@@ -5,6 +5,11 @@ from tkinter import *
 from tkinter import filedialog
 import runpy as rpy
 
+programs = {
+    "statboard": False,
+    "lnrun": False
+}
+
 print("Welcome to Navig8 LWVM Enviroment")
 
 def env():
@@ -69,6 +74,12 @@ def env():
 
                 choc: installs an application to the computer via chocolatey (use it at your own risk)
 
+                cmdconfig: enable/disable modifiable command
+
+                statboard: opens statboard (not gui, modifiable)
+
+                lnrun: runs a line of code (modifiable)
+
                 """)
             elif args[1] == "programs":
                 print("""
@@ -80,8 +91,43 @@ def env():
                 """)
             else:
                 print("invalid argument")
+            
+        elif command.strip().lower().startswith("cmdconfig"):
+            if args[1] == "statboard":
+                if args[2] == "-e":
+                    programs.update({"statboard": True})
+                    print("statboard enabled")
+                elif args[2] == "-d":
+                    programs.update({"statboard": False})
+                    print("statboard disabled")
+                else:
+                    print("That state doesn't exist")
+            elif args[1] == "lnrun":
+                if args[2] == "-e":
+                    programs.update({"lnrun": True})
+                    print("lnrun enabled")
+                elif args[2] == "-d":
+                    programs.update({"lnrun": False})
+                    print("lnrun disabled")
+                else:
+                    print("That state doesn't exist")
+            else:
+                print("Error: Modifiable command doesn't exist")
+        elif command.strip().lower().startswith("statboard") and programs.get("statboard") == True:
+            print("""
+            Navig8 LWVM
+            
+            Version: 1.3
+            Changelog:
+            - added cmdconfig
+            - added statboard
+
+            Made by mcmdev4
+            """)
+        elif command.strip().lower().startswith("lnrun") and programs.get("lnrun") == True:
+            exec(args[1])
         else:
-            print("Error: Command does not exist")
+            print("Error: Command does not exist/not activated")
 
 
 def postit():
