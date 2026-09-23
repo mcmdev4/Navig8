@@ -4,6 +4,9 @@ import time
 from tkinter import *
 from tkinter import filedialog
 import runpy as rpy
+programs = {
+    "statboard": False
+}
 
 print("Welcome to Navig8 LWVM Enviroment")
 
@@ -69,6 +72,10 @@ def env():
 
                 choc: installs an application to the computer via chocolatey (use it at your own risk)
 
+                cmdconfig: enables/disables commands
+
+                statboard: see dev activity
+
                 """)
             elif args[1] == "programs":
                 print("""
@@ -78,10 +85,29 @@ def env():
                 Postit: notepad
 
                 """)
+            elif command.strip().lower().startswith("cmdconfig"):
+                if args[1] == "statboard":
+                    if args[2] == "-e":
+                        programs.update({"statboard": True})
+                        print("Statboard enabled")
+                    elif args[2] == "-d":
+                        programs.update({"statboard": False})
+                        print("Statboard enabled")
+                    else:
+                        print("invalid state")
+                else:
+                    print("invalid command")
+            elif command.strip().lower().startswith("statboard") and programs.get("statboard") == True:
+                print("""
+                Navig8 LWVM
+
+                Version: 1.3
+                Changelog:
+                - added cmdconfig
+                - added statboard
+                """)
             else:
-                print("invalid argument")
-        else:
-            print("Error: Command does not exist")
+                print("Error: Command does not exist/not activated")
 
 
 def postit():
